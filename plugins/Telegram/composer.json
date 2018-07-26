@@ -1,0 +1,20 @@
+{
+    "name": "kanboard/plugin-telegram",
+    "type": "project",
+    "description": "Kanboard plugin to receive notifications on Telegram",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Manu Varkey"
+        }
+    ],
+    "config": {
+        "preferred-install": "dist",
+        "optimize-autoloader": true,
+        "discard-changes": true
+    },
+    "require" : {
+        "php" : ">=5.3",
+        "longman/telegram-bot" : "0.51.0"
+    }
+}
