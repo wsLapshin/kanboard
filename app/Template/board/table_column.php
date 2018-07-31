@@ -20,8 +20,40 @@
             <?php endif ?>
 
             <?php if ($column['nb_tasks'] > 0): ?>
+            <?php 
+                   /** @task В некоторых колонках нужно выводить время вместо задач. Пока привязываемся к имени колонки
+                       Добавить свойсвто колонке в бд. Плюс перенести css */ 
+                   $estimateColumns = ['Оценено', 'Согласовано']; 
+                   $spentColumns = ['В работе', 'Готово'];
+                   $columnCounter = 0;
+                   if( in_array($column['title'], $estimateColumns) ) {
+                     foreach($column['tasks'] as $tsk) {
+                        $columnCounter+=$tsk['time_estimated']; 
+                     }
+                     $columnCounter .= 'ч.';
+                     $class = "blue";
+                   } elseif ( in_array($column['title'], $spentColumns)) {
+                     foreach($column['tasks'] as $tsk) {
+                        $columnCounter+=$tsk['time_spent']; 
+                     } 
+                     $columnCounter .= 'ч.';
+                     $class = "green";
+                   } else {
+                     $columnCounter = $column['nb_tasks'] . 'зад.'; 
+                     $class = "";
+                   }
+            ?>
+            <style>
+                .board-column-stat_green {
+                    color: green;
+                }
+                .board-column-stat_blue {
+                    color: blue;
+                }
+            </style>
             <span title="<?= t('Task count') ?>">
-                (<span id="task-number-column-<?= $column['id'] ?>"><?= $column['nb_tasks'] ?></span>)
+                <?php /*(<span id="task-number-column-<?= $column['id'] ?>"><?= $column['nb_tasks'] ?></span>)*/?>
+                <span class="board-column-stat_<?=$class?>" id="task-number-column-<?= $column['id'] ?>"><?= $columnCounter ?></span>
             </span>
             <?php endif ?>
 
@@ -73,13 +105,13 @@
             </span>
 
             <?php if (! empty($column['column_nb_tasks'])): ?>
-            <span title="<?= t('Total number of tasks in this column across all swimlanes') ?>" class="board-column-header-task-count">
+            <?php /*<span title="<?= t('Total number of tasks in this column across all swimlanes') ?>" class="board-column-header-task-count">
                 <?php if ($column['task_limit'] > 0): ?>
                     (<span><?= $column['column_nb_tasks'] ?></span> / <span title="<?= t('Task limit') ?>"><?= $this->text->e($column['task_limit']) ?></span>)
                 <?php else: ?>
                     (<span><?= $column['column_nb_tasks'] ?></span>)
                 <?php endif ?>
-            </span>
+            </span>*/ ?>
             <?php endif ?>
 	    <?= $this->hook->render('template:board:column:header', array('swimlane' => $swimlane, 'column' => $column)) ?>
         </div>
