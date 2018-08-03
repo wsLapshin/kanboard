@@ -279,8 +279,9 @@ class SubtaskTimeTrackingModel extends Base
                     ->table(SubtaskModel::TABLE)
                     ->eq('task_id', $task_id)
                     ->columns(
-                        'SUM(time_spent) AS time_spent',
-                        'SUM(time_estimated) AS time_estimated'
+                        'SUM(time_spent) AS time_spent'
+                        /*@cdev dont need to recalculate estimated time
+                        ,'SUM(time_estimated) AS time_estimated'*/
                     )
                     ->findOne();
     }
