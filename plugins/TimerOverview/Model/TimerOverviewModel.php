@@ -6,6 +6,7 @@ use Kanboard\Core\Base;
 use Kanboard\Model\SubtaskTimeTrackingModel;
 use Kanboard\Model\SubtaskModel;
 use Kanboard\Model\TaskModel;
+use Kanboard\Model\ProjectModel;
 
 /**
  * TimerOverview Model
@@ -46,10 +47,18 @@ class TimerOverviewModel extends Base
                 $array[] = $subtask['subtask_id'];
             }
 
-            /*$user_id = $this->userSession->getId();
+            $user_id = $this->userSession->getId();
             /*$query = $this->subtaskModel->getUserQuery($user_id, array(SubtaskModel::STATUS_TODO, SubtaskModel::STATUS_INPROGRESS, SubtaskModel::STATUS_DONE));*/
-            $query->join(SubtaskModel::TABLE, 'task_id', 'id', TaskModel::TABLE);
-            $query->in(SubtaskModel::TABLE.'.id', $array);
+            $query = $this->taskFinderModel->getExtendedQuery()
+                    ->beginOr()
+                    ->eq(TaskModel::TABLE.'.owner_id', $user_id)
+                    ->addCondition(TaskModel::TABLE.".id IN (SELECT task_id FROM ".SubtaskModel::TABLE." WHERE ".SubtaskModel::TABLE.".user_id='$user_id')")
+                    ->closeOr()
+                    ->eq(TaskModel::TABLE.'.is_active', TaskModel::STATUS_OPEN)
+                    ->eq(ProjectModel::TABLE.'.is_active', ProjectModel::ACTIVE)
+                    ->join(SubtaskModel::TABLE, 'task_id', 'id', TaskModel::TABLE)
+                    ->in(SubtaskModel::TABLE.'.id', $array);
+
         }
         return $query;
     }
