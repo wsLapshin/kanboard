@@ -1,4 +1,4 @@
-<section class="accordion-section <?= empty($comments) ? 'accordion-collapsed' : '' ?>">
+<section class="accordion-section <?php /*echo( empty($comments) ? 'accordion-collapsed' : '');*/ ?>">
     <div class="accordion-title">
         <h3><a href="#" class="fa accordion-toggle"></a> <?= t('Comments') ?></h3>
     </div>

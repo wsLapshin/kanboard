@@ -1,0 +1,418 @@
+
+// -------------------------------------------------------------------------- //
+//                                                                            //
+// VARS                                                                       //
+// ^^^^                                                                       //
+//                                                                            //
+// -------------------------------------------------------------------------- //
+
+$colorBlueDark:#003366;
+$colorBlueBright:#36c;
+$colorGreyDark:#CCCCCC;
+$colorGreyBright:#EEEEEE;
+$colorGreyVeryBright:#FCFCFC;
+$colorRed:#990000;
+$colorRedDark:#660000;
+$colorTxt:#333333;
+
+$fontStack:"Helvetica Neue",Helvetica,Arial,sans-serif;
+$fontSize:13px;
+$fontSizeSmallScreen:11px;
+$fontSizeHeadl:1.3em;
+$fontSizeHeadl2:1.6em;
+$fontSizeSmall:0.85em;
+
+
+
+
+
+
+
+// -------------------------------------------------------------------------- //
+//                                                                            //
+// HARMONIZE                                                                  //
+// ^^^^^^^^^                                                                  //
+//                                                                            //
+// -------------------------------------------------------------------------- //
+
+body {
+	font-family:$fontStack;
+	font-size:$fontSize;
+	
+	@media only screen and (max-width: 1024px) {
+		font-size:$fontSizeSmallScreen;
+	}
+} 
+
+
+
+// Harmonize Fontsize ------------------------------------------------------- //
+.menu-inline li,
+.page-header li,
+.sidebar,
+.textarea-dropdown li,
+.dropdown-submenu-open li,
+table,
+.table-small,
+.views,
+header ul,
+.fc-event,
+.activity-description,
+.documentation,
+.project-overview-columns,
+.project-overview-column span,
+.form-help,
+.btn,
+.buttons-header,
+.task-board-title,
+.task-board,
+.activity-date,
+.task-summary-column,
+.task-summary-buttons,
+.subtasks-table {
+    font-size: 1em;
+}
+
+.dashboard-project-stats span {
+	font-size: $fontSizeSmall;
+}
+
+.assign-me {
+	font-size: $fontSizeSmall;
+}
+
+
+
+// Remove round edges ------------------------------------------------------- //
+.filter-box input[type="text"],
+.filter-box div.dropdown:last-child,
+.views li:first-child,
+.views li:last-child {
+	border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+	border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.task-summary-container,
+.alert,
+.btn,
+.listing,
+.task-show-title {
+	border-radius: 0;
+}
+
+
+
+// Harmonize jquery-ui ------------------------------------------------------ //
+.ui-widget {
+	font-family:$fontStack;
+	font-size:1em;
+}
+
+div.ui-tooltip,
+.ui-datepicker table,
+#ui-datepicker-div {
+	font-size:1em;
+}
+
+.ui-corner-all,
+.ui-corner-bottom,
+.ui-corner-right,
+.ui-corner-br {
+    border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0;
+	border-top-right-radius: 0;
+	border-top-left-radius: 0;
+}
+
+
+
+// Harmonize Form-Elements -------------------------------------------------- //
+input[type="number"],
+input[type="date"],
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+	font-family:$fontStack;
+	font-size:$fontSize;
+}
+
+input[type="file"] {
+	font-family:$fontStack;
+	font-size:$fontSize;
+}
+
+select {
+	font-family:$fontStack;
+	font-size:$fontSize;
+}
+
+.filter-box input[type="text"] {
+	font-size:$fontSize;
+}
+
+
+
+// Harmonize Chosen --------------------------------------------------------- //
+.chosen-container {
+    font-size: $fontSize;
+	
+	.chosen-results li.highlighted {
+		background-color: $colorBlueBright;
+		background-image: none;
+	}
+}
+
+.chosen-container-single {
+	.chosen-single {
+		box-shadow:none;
+		background:#FFFFFF;
+		border-radius: 0;
+	}
+
+	.chosen-drop {
+		border-radius: 0;
+	}
+}
+
+.chosen-container-active.chosen-with-drop .chosen-single {
+	background:#FFFFFF;
+}
+
+
+
+
+
+// -------------------------------------------------------------------------- //
+//                                                                            //
+// IMPROVEMENTS                                                               //
+// ^^^^^^^^^^^^                                                               //
+//                                                                            //
+// -------------------------------------------------------------------------- //
+
+
+// Fonts and Typography ----------------------------------------------------- //
+// Links
+a {
+	color:$colorBlueBright;
+	
+	&:hover {
+		color:$colorBlueDark;
+	}
+	
+	&:focus {
+		color:$colorBlueDark;
+	}
+}
+
+// Headlines
+h2 {
+	font-size:$fontSizeHeadl;
+	font-weight: bold;
+}
+h3 { 
+	font-size:$fontSizeHeadl;
+	font-weight: bold;
+}
+
+
+
+// Form-Elements ------------------------------------------------------------ //
+input[type="number"],
+input[type="date"],
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+	padding-left:5px;
+}
+
+select {
+	padding:5px 3px 5px 3px;
+	margin-top: 10px;
+	max-width: 95%;
+	width: 200px;
+}
+
+table select {
+	margin-top:0;
+}
+
+.filter-box input[type="text"] {
+	padding-left:5px;
+}
+
+.form-actions {
+	margin-bottom: 20px;
+}
+
+.form-column ul {
+	margin-top:5px;
+}
+
+.form-help {
+	margin-top:5px;
+}
+
+
+
+// Buttons ------------------------------------------------------------------ //
+.btn {
+	padding: 5px 10px 5px 10px;
+}
+
+.btn-blue {
+	background:$colorBlueBright;
+	border:none;
+	
+	&:hover,
+	&:focus {
+		background:$colorBlueDark; 
+		border:none;
+	}
+}
+
+.btn-red {
+	background:$colorRed;
+	border:none;
+	
+	&:hover,
+	&:focus {
+		background:$colorRedDark; 
+		border:none;
+	}
+}
+
+
+
+// Table -------------------------------------------------------------------- //
+table {
+	border-collapse: separate;
+	margin-bottom:30px;
+	border-top:1px solid $colorGreyDark;
+	border-right:1px solid $colorGreyDark;
+}
+
+th {
+	background:$colorGreyBright;
+}
+
+th, td {
+	border-top: none;
+	border-right:none;
+	border-bottom:1px solid $colorGreyDark;
+	border-left:1px solid $colorGreyDark;
+	padding:6px 4px 6px 4px;
+}
+
+
+
+// Page- and Project-Header ------------------------------------------------- //
+.page-header {
+	background:$colorGreyBright;
+	padding:5px 15px 5px 15px;
+
+	h2 {
+		font-size:$fontSizeHeadl;
+		border:none;
+	}
+
+	ul {
+		//margin-top:0;
+
+		.fa {
+			color:$colorBlueDark;
+		}
+
+		a {
+			text-decoration:none;
+		}
+	}
+}
+
+.project-header {
+	background:$colorGreyBright;
+	padding:5px 15px 5px 15px;
+	margin-top:0;
+}
+
+
+
+// Board -------------------------------------------------------------------- //
+.board-column-header-task-count {
+	color:#999999;
+	font-size:$fontSizeSmall;
+}
+
+.task-board {
+	padding:4px;
+	margin:10px 10px 20px 10px;
+}
+
+.project-overview-column strong {
+	font-size:2em;
+}
+
+.project-overview-column {
+	border-radius:0;
+	min-width:100px;
+	margin-right:20px;
+}
+
+.activity-event {
+	border-bottom: 1px solid $colorGreyDark;
+	padding:8px 0 20px 14px;
+}
+
+
+
+// Tasks -------------------------------------------------------------------- //
+#task-summary h2 {
+	font-size:$fontSizeHeadl2;
+	color:$colorTxt;
+}
+
+.task-show-title h2 {
+	font-size:$fontSizeHeadl2;
+	color:$colorTxt;
+}
+
+.comment-sorting {
+	font-size:$fontSizeSmallScreen;
+}
+
+.task-summary-column {
+	color:$colorTxt;
+}
+
+
+
+// Messages ----------------------------------------------------------------- //
+.alert {
+	margin-bottom:30px;
+}
+
+
+
+// Others ------------------------------------------------------------------- //
+.textarea-dropdown .active,
+.textarea-dropdown li:hover,
+.dropdown-submenu-open li:hover:not(.no-hover) {
+    background: $colorBlueBright;
+}
+
+.accordion-title {
+	background:$colorGreyBright;
+	padding:3px 0 3px 10px;
+}
+
+.accordion-title h3 {
+	background:none;
+}
+
+.views li {
+	background:none;
+	border:none;
+}
+
+

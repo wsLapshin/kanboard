@@ -1,4 +1,5 @@
 <div class="sidebar sidebar-icons">
+    <?php if ($this->user->hasProjectAccess('TaskModificationController', 'edit', $task['project_id'])): ?>
     <div class="sidebar-title">
         <h2><?= t('Task #%d', $task['id']) ?></h2>
     </div>
@@ -6,6 +7,38 @@
         <li <?= $this->app->checkMenuSelection('TaskViewController', 'show') ?>>
             <?= $this->url->icon('newspaper-o', t('Summary'), 'TaskViewController', 'show', array('task_id' => $task['id'], 'project_id' => $task['project_id'])) ?>
         </li>
+    </ul>
+    <ul>
+        <?php if ($this->projectRole->canUpdateTask($task)): ?>
+        <li>
+            <?= $this->modal->large('edit', t('Edit the task'), 'TaskModificationController', 'edit', array('task_id' => $task['id'], 'project_id' => $task['project_id'])) ?>
+        </li>
+        <?php endif ?>
+        <li>
+            <?= $this->modal->medium('clock-o', t('Add a sub-task'), 'SubtaskController', 'create', array('task_id' => $task['id'], 'project_id' => $task['project_id'])) ?>
+        </li>
+        <li>
+            <?= $this->modal->medium('code-fork', t('Add internal link'), 'TaskInternalLinkController', 'create', array('task_id' => $task['id'], 'project_id' => $task['project_id'])) ?>
+        </li>
+       
+        <li>
+            <?= $this->modal->small('comment-o', t('Add a comment'), 'CommentController', 'create', array('task_id' => $task['id'], 'project_id' => $task['project_id'])) ?>
+        </li>
+        <li>
+            <?= $this->modal->medium('file', t('Attach a document'), 'TaskFileController', 'create', array('task_id' => $task['id'], 'project_id' => $task['project_id'])) ?>
+        </li>
+        <li>
+            <?= $this->modal->medium('camera', t('Add a screenshot'), 'TaskFileController', 'screenshot', array('task_id' => $task['id'], 'project_id' => $task['project_id'])) ?>
+        </li>
+        
+    </ul>
+    <?php endif ?>
+
+        <div class="sidebar-title">
+        <h2><?= t('Analytic') ?></h2>
+    </div>
+    <ul>
+        
         <li <?= $this->app->checkMenuSelection('ActivityController', 'task') ?>>
             <?= $this->url->icon('dashboard', t('Activity stream'), 'ActivityController', 'task', array('task_id' => $task['id'], 'project_id' => $task['project_id'])) ?>
         </li>
@@ -23,37 +56,19 @@
 
         <?= $this->hook->render('template:task:sidebar:information', array('task' => $task)) ?>
     </ul>
-
+    
     <?php if ($this->user->hasProjectAccess('TaskModificationController', 'edit', $task['project_id'])): ?>
     <div class="sidebar-title">
-        <h2><?= t('Actions') ?></h2>
+        <h2><?= t('Other Actions') ?></h2>
     </div>
     <ul>
         <?php if ($this->projectRole->canUpdateTask($task)): ?>
         <li>
-            <?= $this->modal->large('edit', t('Edit the task'), 'TaskModificationController', 'edit', array('task_id' => $task['id'], 'project_id' => $task['project_id'])) ?>
-        </li>
-        <li>
             <?= $this->modal->medium('refresh fa-rotate-90', t('Edit recurrence'), 'TaskRecurrenceController', 'edit', array('task_id' => $task['id'], 'project_id' => $task['project_id'])) ?>
         </li>
-        <?php endif ?>
-        <li>
-            <?= $this->modal->medium('plus', t('Add a sub-task'), 'SubtaskController', 'create', array('task_id' => $task['id'], 'project_id' => $task['project_id'])) ?>
-        </li>
-        <li>
-            <?= $this->modal->medium('code-fork', t('Add internal link'), 'TaskInternalLinkController', 'create', array('task_id' => $task['id'], 'project_id' => $task['project_id'])) ?>
-        </li>
-        <li>
+        <?php endif;?>
+         <li>
             <?= $this->modal->medium('external-link', t('Add external link'), 'TaskExternalLinkController', 'find', array('task_id' => $task['id'], 'project_id' => $task['project_id'])) ?>
-        </li>
-        <li>
-            <?= $this->modal->small('comment-o', t('Add a comment'), 'CommentController', 'create', array('task_id' => $task['id'], 'project_id' => $task['project_id'])) ?>
-        </li>
-        <li>
-            <?= $this->modal->medium('file', t('Attach a document'), 'TaskFileController', 'create', array('task_id' => $task['id'], 'project_id' => $task['project_id'])) ?>
-        </li>
-        <li>
-            <?= $this->modal->medium('camera', t('Add a screenshot'), 'TaskFileController', 'screenshot', array('task_id' => $task['id'], 'project_id' => $task['project_id'])) ?>
         </li>
         <li>
             <?= $this->modal->small('files-o', t('Duplicate'), 'TaskDuplicationController', 'duplicate', array('task_id' => $task['id'], 'project_id' => $task['project_id'])) ?>
@@ -91,5 +106,6 @@
 
         <?= $this->hook->render('template:task:sidebar:actions', array('task' => $task)) ?>
     </ul>
-    <?php endif ?>
+    <?php endif;?>
+
 </div>
