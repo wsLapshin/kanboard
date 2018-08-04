@@ -53,10 +53,12 @@ class AutoCreateSubtask extends Base
     $title_test = $this->getParam('multitasktitles');
     $title_test = preg_replace("/^\s+/m", $data['task']['title'] . "\r\n", $title_test);
 
+    $user_id = ( empty($this->getParam('user_id')))?$this->userSession->getId():$this->getParam('user_id');
     $values = array(
       'title' => $title_test,
       'task_id' => $data['task_id'],
-      'user_id' => $this->getParam('user_id'),
+      'user_id' => $user_id ,
+//      'user_id' => $this->getParam('user_id'),
       'time_estimated' => $this->getParam('time_estimated'),
       'time_spent' => 0,
       'status' => 0,
