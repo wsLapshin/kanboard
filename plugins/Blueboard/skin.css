@@ -251,6 +251,10 @@ table.table-fixed th, table.table-fixed td {
 	color: #3B6998;
 }
 
+header .select-dropdown-input {
+  width: 320px !important;  
+}
+
 
 @media (max-width: 768px) {
 	.sidebar {
