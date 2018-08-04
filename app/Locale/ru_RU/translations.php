@@ -261,7 +261,7 @@ return array(
     'estimated' => 'расчётное',
     'Sub-Tasks' => 'Операции',
     'Add a sub-task' => 'Добавить операцию',
-    'Add a sub-task long' => 'Добавить, чтобы учитывать время',
+    'Add a sub-task long' => 'добавить, чтобы учитывать время',
     'Original estimate' => 'Заплан.',
     'Create another sub-task' => 'Создать другую операцию',
     'Time spent' => 'Времени затрачено',

@@ -1,7 +1,7 @@
 body {
     /*color: #868ba1;*/
     background-color: #e9ecef;
-    font-family: "Roboto", "Helvetica Neue", Arial, sans-s
+    font-family: "Roboto", Arial, sans-s
 }
 
 .page {
@@ -136,9 +136,10 @@ input[type="number"], input[type="date"], input[type="email"], input[type="passw
 }
 
 .accordion-section {
-    margin: 20px;
+    margin: 20px 0;
     background: #fff;
-    padding: 50px 30px;
+    /*padding: 50px 30px;*/
+    padding: 10px;
 }
 
 .project-overview-column {
@@ -216,7 +217,7 @@ input[type="number"], input[type="date"], input[type="email"], input[type="passw
 
 .sidebar ul>li a {
   color: #868e96;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
 }
 
 .sidebar>ul li.active {
