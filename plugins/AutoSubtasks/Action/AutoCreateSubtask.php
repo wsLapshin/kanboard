@@ -58,6 +58,7 @@ class AutoCreateSubtask extends Base
       'title' => $title_test,
       'task_id' => $data['task_id'],
       'user_id' => $user_id ,
+//CDEV Patch #94      
 //      'user_id' => $this->getParam('user_id'),
       'time_estimated' => $this->getParam('time_estimated'),
       'time_spent' => 0,
@@ -72,6 +73,14 @@ class AutoCreateSubtask extends Base
       $subtask = trim($subtask);
 
       if (! empty($subtask)) {
+
+        //CDEV patch, check if subtask with this name is exists already
+        $s = $this->subtaskModel->getQuery()->eq('task_id', $values['task_id'])->eq('title', $subtask)->findOne();
+        if ( null !== $s ) {
+            continue;
+        }
+        //END Patch
+
         $subtaskValues = $values;
         $subtaskValues['title'] = $subtask;
 
