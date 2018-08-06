@@ -9,13 +9,20 @@ KB.on('dom.ready', function () {
             cache: false,
             url: url,
             success: function(data) {
-                if (url.indexOf('fragment=table') != -1) {
+                 //CDEV
+                /*
+                 * @task 
+                 * move this js change to Timetrackingeditor plugin
+                 */
+                window.location.href = window.location.href;
+                
+                /*if (url.indexOf('fragment=table') != -1) {
                     $('.subtasks-table').replaceWith(data);
                 } else if (url.indexOf('fragment=rows') != -1) {
                     $(el).closest('.task-list-subtasks').replaceWith(data);
                 } else {
                     $(el).closest('.subtask-title').replaceWith(data);
-                }
+                }*/
             }
         });
     });
@@ -28,7 +35,13 @@ KB.on('dom.ready', function () {
             cache: false,
             url: el.attr('href'),
             success: function(data) {
-                $(el).closest('.subtask-time-tracking').replaceWith(data);
+                 //CDEV
+                /*
+                 * @task 
+                 * move this js change to Timetrackingeditor plugin
+                 */
+                window.location.href = window.location.href;
+                //$(el).closest('.subtask-time-tracking').replaceWith(data);
             }
         });
     });

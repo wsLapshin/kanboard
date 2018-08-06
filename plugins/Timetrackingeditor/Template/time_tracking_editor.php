@@ -5,12 +5,13 @@
 <?= $this->render('task/time_tracking_summary', array('task' => $task)) ?>
 
 <h3><?= t('Subtask timesheet') ?></h3>
-
-<?= $this->modal->medium("plus",t('Add a new timetracking entry'), 'TimeTrackingEditorController',
-        'create', array(
-            'plugin' => 'timetrackingeditor',
-            'task_id' => $task['id'],
-            'project_id' => $task['project_id'])) ?> 
+<?php /**@task */ if ($this->user->getRoleName() != 'Пользователь') { ?>
+    <?= $this->modal->medium("plus",t('Add a new timetracking entry'), 'TimeTrackingEditorController',
+            'create', array(
+                'plugin' => 'timetrackingeditor',
+                'task_id' => $task['id'],
+                'project_id' => $task['project_id'])) ?>
+<?php } ?>
           
 <?php if ($subtask_paginator->isEmpty()): ?>
     <p class="alert"><?= t('There is nothing to show.') ?></p>
@@ -37,7 +38,8 @@
             <td><?= $this->dt->datetime($record['end']) ?></td>
             <td class="right"><?= n($record['time_spent']).' '.t('hours') ?></td>
             <td>
-		<?php if ($this->user->isCurrentUser($record['user_id'])) { ?>
+		<?php //if ($this->user->isCurrentUser($record['user_id'])) { ?>
+        <?php /**@task */ if ($this->user->getRoleName() != 'Пользователь') { ?>
                 <?= $this->render('timetrackingeditor:menu', array(
                     'task' => $task,
                     'subtask_id' => $record['subtask_id'],

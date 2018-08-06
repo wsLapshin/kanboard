@@ -8,6 +8,8 @@ use Kanboard\Plugin\Timetrackingeditor\Model\SubtaskTimeTrackingEditModel;
 use Kanboard\Plugin\Timetrackingeditor\Model\SubtaskTimeTrackingCreationModel;
 use Kanboard\Plugin\Timetrackingeditor\Validator\SubtaskTimeTrackingValidator;
 
+use Kanboard\Controller\SubtaskRestrictionController;
+
 /**
  * Column Controller
  *
@@ -16,132 +18,6 @@ use Kanboard\Plugin\Timetrackingeditor\Validator\SubtaskTimeTrackingValidator;
  */
 class TimeTrackingEditorController extends BaseController
 {
-
-/**
- * Show Form to start the timer
- * @access public
- * @param array $values
- * @param arry $errors
- */
-
- public function start(array $values = array(), array $errors = array())
- {
-   $project = $this->getProject();
-
-   if (empty($values)) {
-     $values = array('project_id' => $project['id'],
-                     'task_id' => $this->request->getIntegerParam('task_id'),
-                     'subtask_id' => $this->request->getIntegerParam('subtask_id')
-                   );
-   }
-
-   $values['subtask'] = $this->subtaskModel->getById($values['subtask_id']);
-
-   $this->response->html($this->template->render('Timetrackingeditor:start', array(
-     'values' => $values,
-     'errors' => $errors,
-     'project' => $project,
-     'title' => t('Start a new timer')
-   )));
- }
-
- /**
-  * Show Form to stop the timer
-  * @access public
-  * @param array $values
-  * @param arry $errors
-  */
-
-  public function stop(array $values = array(), array $errors = array())
-  {
-    $project = $this->getProject();
-
-    if (empty($values)) {
-      $values = array('project_id' => $project['id'],
-                      'task_id' => $this->request->getIntegerParam('task_id'),
-                      'subtask_id' => $this->request->getIntegerParam('subtask_id')
-                    );
-    }
-
-    $values['subtask'] = $this->subtaskModel->getById($values['subtask_id']);
-
-    $timetracking = $this->subtaskTimeTrackingEditModel
-                      ->getOpenTimer(
-                            $this->userSession->getId(),
-                            $values['subtask_id']
-                          );
-
-    $values['comment'] = $timetracking["comment"];
-    $values['is_billable'] = $timetracking['is_billable'];
-
-    $this->response->html($this->template->render('Timetrackingeditor:stop', array(
-      'values' => $values,
-      'errors' => $errors,
-      'project' => $project,
-      'title' => t('Stop a timer')
-    )));
-  }
-
-
-/**
- * Start the timer and save comment and is_billable
- * @access public
- *
- */
-
- public function startsave()
- {
-   $values = $this->request->getValues();
-   $project = $this->getProject();
-   $task = $this->getTask();
-
-   if (!$this->subtaskTimeTrackingModel->logStartTimeExtended(
-        $values['subtask_id'],
-        $this->userSession->getId(),
-        $values['comment'],
-        isset($values['is_billable']) ? $values['is_billable']: 0)) {
-          // TODO: Best way to display the errors?
-          $this->flash->failure("Another Timer is already running");
-          return false;
-        }
-
-  $this->subtaskStatusModel->toggleStatus($values['subtask_id']);
-
-   return $this->response->redirect($this->helper->url->to('SubtaskStatusController', 'change', array(
-     'refresh-table' => 1,
-     'project_id' => $project['id'],
-     'task_id' => $task['id'],
-     'subtask_id' => $values['subtask_id']
-   )), true);
- }
-
- /**
-  * Stop the timer and save comment and is_billable
-  *
-  * @access public
-  */
-  public function stopsave()
-  {
-
-    $values = $this->request->getValues();
-    $project = $this->getProject();
-    $task = $this->getTask();
-
-    $this->subtaskTimeTrackingModel->logEndTimeExtended(
-         $values['subtask_id'],
-         $this->userSession->getId(),
-         $values['comment'],
-         isset($values['is_billable']) ? $values['is_billable']: 0 );
-
-   $this->subtaskStatusModel->toggleStatus($values['subtask_id']);
-
-    return $this->response->redirect($this->helper->url->to('SubtaskStatusController', 'change', array(
-      'refresh-table' => 1,
-      'project_id' => $project['id'],
-      'task_id' => $task['id'],
-      'subtask_id' => $values['subtask_id']
-    )), true);
-  }
   /**
    * Show Form to create new entry
    * @access public
@@ -236,7 +112,7 @@ class TimeTrackingEditorController extends BaseController
         $this->updateTimespent($values['task_id'], $values['opposite_subtask_id'], $values['time_spent']);
 
         if ($oldtimetracking['is_billable'] == 1) {
-            $this->updateTimebillable($values['task_id'], $oldtimetracking['opposite_subtask_id'], $oldtimetracking['time_spent'] * -1);
+            $this->updateTimebillable($values['task_id'], $oldtimetracking['subtask_id'], $oldtimetracking['time_spent'] * -1);
         }
         if ($values['is_billable'] == 1) {
             $this->updateTimebillable($values['task_id'], $values['opposite_subtask_id'], $values['time_spent']);

@@ -82,7 +82,7 @@ gulp.task('vendor', function() {
 gulp.task('js', function() {
     gulp.src(src.js)
         .pipe(concat('app.min.js'))
-        .pipe(uglify())
+        //.pipe(uglify())
         .pipe(gulp.dest(dist.js))
     ;
 });

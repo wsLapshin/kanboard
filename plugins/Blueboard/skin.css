@@ -11,7 +11,9 @@ body {
 header {
     margin: 0 !important;
     border: 0 !important;
-    background-color : #3B6998 !important;
+    /*background-color : #3B6998 !important;*/
+    background: url(./body-bg.jpg) repeat #000 !important;
+    height:45px;
 }
 
 .action-menu {

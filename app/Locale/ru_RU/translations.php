@@ -1387,4 +1387,6 @@ return array(
     'Configure this project' => 'Настроить этот проект',
     'Start now' => 'Начать сейчас',
     'edt' => 'ред.',
+    'No Subtask Time Entry Comment' => 'Без комментария',
+    'Auto finished Time Entry Comment' => 'Готово (чекбоксом)',
 );

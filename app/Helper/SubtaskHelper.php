@@ -65,12 +65,14 @@ class SubtaskHelper extends Base
                 'user_id'    => $userId,
                 'fragment'   => $fragment,
             );
-
-            if ($subtask['status'] == 0 && $this->hasSubtaskInProgress()) {
+            
+            //CDEV
+            $html = $this->helper->url->link($title, 'SubtaskStatusController', 'change', $params, false, 'js-subtask-toggle-status', $this->getSubtaskTooltip($subtask));
+            /*if ($subtask['status'] == 0 && $this->hasSubtaskInProgress()) {
                 $html = $this->helper->url->link($title, 'SubtaskRestrictionController', 'show', $params, false, 'js-modal-confirm', $this->getSubtaskTooltip($subtask));
             } else {
                 $html = $this->helper->url->link($title, 'SubtaskStatusController', 'change', $params, false, 'js-subtask-toggle-status', $this->getSubtaskTooltip($subtask));
-            }
+            }*/
         }
 
         return '<span class="subtask-title">'.$html.'</span>';
@@ -81,12 +83,31 @@ class SubtaskHelper extends Base
         $html = '<span class="subtask-timer-toggle">';
 
         if ($subtask['is_timer_started']) {
-            $html .= $this->helper->url->icon('pause', t('Stop timer'), 'SubtaskStatusController', 'timer', array('timer' => 'stop', 'project_id' => $task['project_id'], 'task_id' => $subtask['task_id'], 'subtask_id' => $subtask['id']), false, 'js-subtask-toggle-timer');
+            /*$html .= $this->helper->url->icon('pause', t('Stop timer'), 'SubtaskStatusController', 'timer', array('timer' => 'stop', 'project_id' => $task['project_id'], 'task_id' => $subtask['task_id'], 'subtask_id' => $subtask['id']), false, 'js-subtask-toggle-timer');*/
+
+            //CDEV #105 
+            //@task move to plugin timetrackingeditor
+            $html .= $this->helper->modal->medium("pause",t('Stop timer'), 'SubtaskStatusController', 'timer', 
+                            array(
+                            'timer' => 'stop',
+                            'plugin' => 'Timetrackingeditor', 
+                            'project_id' => $task['project_id'], 
+                            'task_id' => $subtask['task_id'], 
+                            'subtask_id' => $subtask['id'])
+                     ); 
+
+            
             $html .= ' (' . $this->helper->dt->age($subtask['timer_start_date']) .')';
         } else {
-            $html .= $this->helper->url->icon('play-circle-o', t('Start timer'), 'SubtaskStatusController', 'timer', array('timer' => 'start', 'project_id' => $task['project_id'], 'task_id' => $subtask['task_id'], 'subtask_id' => $subtask['id']), false, 'js-subtask-toggle-timer');
+            /*$html .= $this->helper->url->icon('play-circle-o', t('Start timer'), 'SubtaskStatusController', 'timer', array('timer' => 'start', 'project_id' => $task['project_id'], 'task_id' => $subtask['task_id'], 'subtask_id' => $subtask['id']), false, 'js-subtask-toggle-timer');*/
+
+            //CDEV #105
+            //@task move to plugin timetrackingeditor
+            $html .= $this->helper->url->icon('play-circle-o', t('Start timer'), 'SubtaskStatusController', 'timer', array('timer' => 'start', 'project_id' => $task['project_id'], 'task_id' => $subtask['task_id'], 'subtask_id' => $subtask['id'], 'plugin' => 'Timetrackingeditor'), false, 'js-subtask-toggle-timer');
+            
         }
 
+             
         $html .= '</span>';
 
         return $html;
