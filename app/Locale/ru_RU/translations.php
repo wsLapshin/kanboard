@@ -1389,4 +1389,6 @@ return array(
     'edt' => 'ред.',
     'No Subtask Time Entry Comment' => 'Без комментария',
     'Auto finished Time Entry Comment' => 'Готово (чекбоксом)',
+    'Task hours ready' => 'Затрачено часов',
+    'Task hours estimated' => 'Оценено часов',
 );

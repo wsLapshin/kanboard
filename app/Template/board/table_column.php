@@ -23,21 +23,21 @@
             <?php 
                    /** @task В некоторых колонках нужно выводить время вместо задач. Пока привязываемся к имени колонки
                        Добавить свойсвто колонке в бд. Плюс перенести css */ 
-                   $estimateColumns = ['Оценено', 'Согласовано']; 
+                   $estimateColumns = ['Оценено', 'Согласовано', 'Сделать']; 
                    $spentColumns = ['В работе', 'Готово'];
-                   $columnCounter = 0;
-                   if( in_array($column['title'], $estimateColumns) ) {
+                   $columnCounterEstimated = 0;
+                   $columnCounterSpent = 0;
+                   $columnCounter = null;
+                   if( in_array($column['title'], $estimateColumns) || in_array($column['title'], $spentColumns)  ) {
                      foreach($column['tasks'] as $tsk) {
-                        $columnCounter+=$tsk['time_estimated']; 
+                        $columnCounterEstimated+=$tsk['time_estimated']; 
                      }
-                     $columnCounter .= 'ч.';
-                     $class = "blue";
-                   } elseif ( in_array($column['title'], $spentColumns)) {
+                     //$class = "blue";
+
                      foreach($column['tasks'] as $tsk) {
-                        $columnCounter+=$tsk['time_spent']; 
+                        $columnCounterSpent+=$tsk['time_spent']; 
                      } 
-                     $columnCounter .= 'ч.';
-                     $class = "green";
+                     //$class = "green";
                    } else {
                      $columnCounter = $column['nb_tasks'] . 'зад.'; 
                      $class = "";
@@ -50,11 +50,20 @@
                 .board-column-stat_blue {
                     color: blue;
                 }
+                .board-column-stat_red {
+                    color: red;
+                }
             </style>
-            <span title="<?= t('Task count') ?>">
                 <?php /*(<span id="task-number-column-<?= $column['id'] ?>"><?= $column['nb_tasks'] ?></span>)*/?>
-                <span class="board-column-stat_<?=$class?>" id="task-number-column-<?= $column['id'] ?>"><?= $columnCounter ?></span>
-            </span>
+                <span id="task-number-column-<?= $column['id'] ?>">
+                    <?php if($columnCounter):?>
+                        <span title="<?= t('Task count') ?>"><?= $columnCounter ?></span>
+                    <?php else: ?>
+                        <?php $class = ($columnCounterSpent > $columnCounterEstimated)?'red':'green';?>
+                        <span title="<?= t('Task hours ready') ?>" class="board-column-stat_<?=$class?>"><?=$columnCounterSpent?> ч.</span>  
+                        <span title="<?= t('Task hours estimated') ?>" class="board-column-stat_blue">(<?=$columnCounterEstimated?> ч.)</span> 
+                    <?php endif;?>
+                </span>
             <?php endif ?>
 
             <span class="board-column-title">
